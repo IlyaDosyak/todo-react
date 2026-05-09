@@ -1,14 +1,14 @@
-import React from "react";
-
-const Field = () => {
+const Field = (props) => {
+  const { className, id, label, type = "text" } = props;
   return (
-    <div className="todo__field field">
-      <label className="field__label" htmlFor="new-task">
-        New task
+    <div className={`field ${className}`}>
+      <label className="field__label" htmlFor={id}>
+        {label}
       </label>
       <input
         className="field__input"
-        id="new-task"
+        id={id}
+        type={type}
         placeholder=" "
         autoComplete="off"
       />
