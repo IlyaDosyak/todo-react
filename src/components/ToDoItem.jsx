@@ -4,9 +4,10 @@ const ToDoItem = (props) => {
     id,
     title,
     isDone,
-    onDeleteAllButtonClick,
+    onDeleteButtonClick,
     onTaskCompleteChange,
   } = props;
+
   return (
     <li className={`todo-item ${className}`}>
       <input
@@ -25,7 +26,7 @@ const ToDoItem = (props) => {
         className="todo-item__delete-button"
         aria-label="Delete"
         title="Delete"
-        onClick={() => onDeleteAllButtonClick(id)}
+        onClick={() => onDeleteButtonClick(id)}
       >
         <svg
           width="20"
