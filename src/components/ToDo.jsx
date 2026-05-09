@@ -10,20 +10,35 @@ const ToDo = () => {
     { id: 3, title: "Finish project", isDone: false },
   ];
 
+  const deleteAllTasks = () => {};
+
+  const deleteTask = (id) => {};
+
+  const toggleTaskComplete = (id, isDone) => {};
+
+  const filterTasks = (query) => {};
+
+  const addTask = () => {};
+
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
 
-      <AddTaskForm />
+      <AddTaskForm addTask={addTask} />
 
-      <SearchTaskForm />
+      <SearchTaskForm onSearchInput={filterTasks} />
 
       <ToDoInfo
         total={tasks.length}
         done={tasks.filter(({ isDone }) => isDone).length}
+        onDeleteAllButtonClick={deleteAllTasks}
       />
 
-      <ToDoList tasks={tasks} />
+      <ToDoList
+        tasks={tasks}
+        onDeleteTaskButtonClick={deleteTask}
+        onTaskCompleteChange={toggleTaskComplete}
+      />
     </div>
   );
 };
