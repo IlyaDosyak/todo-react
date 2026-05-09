@@ -18,7 +18,10 @@ const ToDo = () => {
 
       <SearchTaskForm />
 
-      <ToDoInfo />
+      <ToDoInfo
+        total={tasks.length}
+        done={tasks.filter(({ isDone }) => isDone).length}
+      />
 
       <ToDoList tasks={tasks} />
     </div>
