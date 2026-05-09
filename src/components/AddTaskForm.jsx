@@ -5,7 +5,7 @@ const AddTaskForm = () => {
   return (
     <form className="todo__form">
       <Field className="todo__field" id="new-task" label="New task" />
-      <Button />
+      <Button type="submit">Add</Button>
     </form>
   );
 };

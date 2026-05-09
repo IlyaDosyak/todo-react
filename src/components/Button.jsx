@@ -1,9 +1,10 @@
 import React from "react";
 
-const Button = () => {
+const Button = (props) => {
+  const { className, type, children } = props;
   return (
-    <button className="button" type="submit">
-      Add
+    <button className={`button ${className}`} type={type}>
+      {children}
     </button>
   );
 };
