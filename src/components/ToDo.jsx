@@ -5,11 +5,11 @@ import SearchTaskForm from "./SearchTaskForm";
 import { useEffect, useState } from "react";
 
 const ToDo = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "Buy groceries", isDone: false },
-    { id: 2, title: "Walk the dog", isDone: true },
-    { id: 3, title: "Finish project", isDone: false },
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
