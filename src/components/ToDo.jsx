@@ -10,7 +10,7 @@ const ToDo = () => {
 
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-  // const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const newTaskInputRef = useRef(null);
@@ -32,7 +32,6 @@ const ToDo = () => {
   };
 
   const addTask = () => {
-    const newTaskTitle = newTaskInputRef.current.value.trim();
     if (newTaskTitle.length > 0) {
       const newTask = {
         id: crypto?.randomUUID() ?? Date.now().toString(),
@@ -41,8 +40,7 @@ const ToDo = () => {
       };
 
       setTasks([...tasks, newTask]);
-      // setNewTaskTitle("");
-      newTaskInputRef.current.value = "";
+      setNewTaskTitle("");
       setSearchQuery("");
     }
   };
@@ -65,8 +63,8 @@ const ToDo = () => {
 
       <AddTaskForm
         addTask={addTask}
-        // newTaskTitle={newTaskTitle}
-        // setNewTaskTitle={setNewTaskTitle}
+        newTaskTitle={newTaskTitle}
+        setNewTaskTitle={setNewTaskTitle}
         newTaskInputRef={newTaskInputRef}
       />
 
