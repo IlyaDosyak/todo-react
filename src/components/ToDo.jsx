@@ -2,7 +2,7 @@ import ToDoInfo from "./ToDoInfo";
 import ToDoList from "./ToDoList";
 import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ToDo = () => {
   const [tasks, setTasks] = useState([
@@ -43,6 +43,10 @@ const ToDo = () => {
       setNewTaskTitle("");
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div className="todo">
