@@ -2,7 +2,7 @@ import ToDoInfo from "./ToDoInfo";
 import ToDoList from "./ToDoList";
 import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ToDo = () => {
   const [tasks, setTasks] = useState(() => {
@@ -10,8 +10,10 @@ const ToDo = () => {
 
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  // const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const newTaskInputRef = useRef(null);
 
   const deleteAllTasks = () => {
     const isConfirmed = window.confirm(
@@ -30,7 +32,8 @@ const ToDo = () => {
   };
 
   const addTask = () => {
-    if (newTaskTitle.trim().length > 0) {
+    const newTaskTitle = newTaskInputRef.current.value.trim();
+    if (newTaskTitle.length > 0) {
       const newTask = {
         id: crypto?.randomUUID() ?? Date.now().toString(),
         title: newTaskTitle,
@@ -38,7 +41,8 @@ const ToDo = () => {
       };
 
       setTasks([...tasks, newTask]);
-      setNewTaskTitle("");
+      // setNewTaskTitle("");
+      newTaskInputRef.current.value = "";
       setSearchQuery("");
     }
   };
@@ -61,8 +65,9 @@ const ToDo = () => {
 
       <AddTaskForm
         addTask={addTask}
-        newTaskTitle={newTaskTitle}
-        setNewTaskTitle={setNewTaskTitle}
+        // newTaskTitle={newTaskTitle}
+        // setNewTaskTitle={setNewTaskTitle}
+        newTaskInputRef={newTaskInputRef}
       />
 
       <SearchTaskForm
