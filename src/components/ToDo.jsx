@@ -39,6 +39,7 @@ const ToDo = () => {
 
       setTasks([...tasks, newTask]);
       setNewTaskTitle("");
+      setSearchQuery("");
     }
   };
 
