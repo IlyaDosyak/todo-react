@@ -49,6 +49,10 @@ const ToDo = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  useEffect(() => {
+    newTaskInputRef.current?.focus();
+  }, []);
+
   const clearSearchQuery = searchQuery.trim().toLowerCase();
   const filteredTasks =
     clearSearchQuery.length > 0
