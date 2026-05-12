@@ -6,6 +6,7 @@ const ToDoList = (props) => {
     tasks = [],
     onDeleteTaskButtonClick,
     onTaskCompleteChange,
+    filteredTasks,
   } = props;
   const hasTasks = tasks.length > 0;
 
@@ -13,7 +14,7 @@ const ToDoList = (props) => {
 
   return (
     <ul className={`todo__list ${className}`}>
-      {tasks.map((task) => (
+      {(filteredTasks ?? tasks).map((task) => (
         <ToDoItem
           key={task.id}
           className="todo__item"

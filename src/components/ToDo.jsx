@@ -10,8 +10,8 @@ const ToDo = () => {
 
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const deleteAllTasks = () => {
     const isConfirmed = window.confirm(
@@ -28,8 +28,6 @@ const ToDo = () => {
   const toggleTaskComplete = (id, isDone) => {
     setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone } : t)));
   };
-
-  const filterTasks = (query) => {};
 
   const addTask = () => {
     if (newTaskTitle.trim().length > 0) {
@@ -48,6 +46,14 @@ const ToDo = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  const clearSearchQuery = searchQuery.trim().toLowerCase();
+  const filteredTasks =
+    clearSearchQuery.length > 0
+      ? tasks.filter(({ title }) =>
+          title.toLowerCase().includes(clearSearchQuery),
+        )
+      : null;
+
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
@@ -58,7 +64,10 @@ const ToDo = () => {
         setNewTaskTitle={setNewTaskTitle}
       />
 
-      <SearchTaskForm onSearchInput={filterTasks} />
+      <SearchTaskForm
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
 
       <ToDoInfo
         total={tasks.length}
@@ -70,6 +79,7 @@ const ToDo = () => {
         tasks={tasks}
         onDeleteTaskButtonClick={deleteTask}
         onTaskCompleteChange={toggleTaskComplete}
+        filteredTasks={filteredTasks}
       />
     </div>
   );
