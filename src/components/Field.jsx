@@ -7,14 +7,16 @@ const Field = (props) => {
     onInput,
     value,
     ref,
+    error,
   } = props;
+
   return (
     <div className={`field ${className}`}>
       <label className="field__label" htmlFor={id}>
         {label}
       </label>
       <input
-        className="field__input"
+        className={`field__input ${error ? "is-invalid" : ""}`}
         id={id}
         type={type}
         placeholder=" "
@@ -23,6 +25,7 @@ const Field = (props) => {
         value={value}
         ref={ref}
       />
+      {error && <span className="field__error" title={error}>{error}</span>}
     </div>
   );
 };
