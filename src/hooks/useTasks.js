@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import useTasksLocalStorage from "./useTasksLocalStorage";
+import tasksApi from "../api/tasksApi";
 
 const useTasks = () => {
-  const { savedTasks, saveTasks } = useTasksLocalStorage();
-
-  const [tasks, setTasks] = useState(savedTasks);
+  const [tasks, setTasks] = useState([]);
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,42 +14,50 @@ const useTasks = () => {
       "Are you sure you want to delete all tasks?",
     );
 
-    if (isConfirmed) setTasks([]);
-  }, []);
+    if (isConfirmed) {
+      tasksApi.deleteAll(tasks).then(() => setTasks([]));
+    }
+  }, [tasks]);
 
   const deleteTask = useCallback(
     (id) => {
-      setTasks(tasks.filter((t) => t.id !== id));
+      tasksApi.delete(id).then(() => {
+        setTasks(tasks.filter((t) => t.id !== id));
+      });
     },
+
     [tasks],
   );
 
   const toggleTaskComplete = useCallback(
     (id, isDone) => {
-      setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone } : t)));
+      tasksApi
+        .toggleComplete(id, isDone)
+        .then(() =>
+          setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone } : t))),
+        );
     },
     [tasks],
   );
 
   const addTask = useCallback((title) => {
     const newTask = {
-      id: crypto?.randomUUID() ?? Date.now().toString(),
       title,
       isDone: false,
     };
 
-    setTasks((prev) => [...prev, newTask]);
-    setNewTaskTitle("");
-    setSearchQuery("");
-    newTaskInputRef.current?.focus();
+    tasksApi.add(newTask).then((addedTask) => {
+      setTasks((prev) => [...prev, addedTask]);
+      setNewTaskTitle("");
+      setSearchQuery("");
+      newTaskInputRef.current?.focus();
+    });
   }, []);
 
   useEffect(() => {
-    saveTasks(tasks);
-  }, [tasks]);
-
-  useEffect(() => {
     newTaskInputRef.current?.focus();
+
+    tasksApi.getAll().then(setTasks);
   }, []);
 
   const filteredTasks = useMemo(() => {
