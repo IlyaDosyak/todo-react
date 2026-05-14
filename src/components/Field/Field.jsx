@@ -1,3 +1,5 @@
+import s from "./Field.module.scss";
+
 const Field = (props) => {
   const {
     className = "",
@@ -11,12 +13,12 @@ const Field = (props) => {
   } = props;
 
   return (
-    <div className={`field ${className}`}>
-      <label className="field__label" htmlFor={id}>
+    <div className={`${s.field} ${className}`}>
+      <label className={s.label} htmlFor={id}>
         {label}
       </label>
       <input
-        className={`field__input ${error ? "is-invalid" : ""}`}
+        className={`${s.input}${error ? s.isInvalid : ""}`}
         id={id}
         type={type}
         placeholder=" "
@@ -25,7 +27,11 @@ const Field = (props) => {
         value={value}
         ref={ref}
       />
-      {error && <span className="field__error" title={error}>{error}</span>}
+      {error && (
+        <span className={s.error} title={error}>
+          {error}
+        </span>
+      )}
     </div>
   );
 };
