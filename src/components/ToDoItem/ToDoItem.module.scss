@@ -10,7 +10,7 @@
     background-color: var(--color-gray-1);
   }
 
-  &.is-disappearing {
+  &.isDisappearing {
     opacity: 0;
     translate: 0 -75%;
     transition-duration: calc(var(--transition-duration) * 2);
