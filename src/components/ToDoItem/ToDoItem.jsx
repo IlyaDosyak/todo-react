@@ -1,4 +1,4 @@
-import { memo, useContext } from "react";
+import { memo, useContext, useRef } from "react";
 import { TasksContext } from "../../context/TasksContext";
 import RouterLink from "../RouterLink/RouterLink";
 import s from "./ToDoItem.module.scss";
@@ -11,11 +11,13 @@ const ToDoItem = (props) => {
     firstIncompleteTaskId,
     deleteTask,
     toggleTaskComplete,
+    disappearingTaskId,
+    appearingTaskId,
   } = useContext(TasksContext);
 
   return (
     <li
-      className={`${s.toDoItem} ${className}`}
+      className={`${s.toDoItem} ${className} ${disappearingTaskId === id ? s.isDisappearing : ""} ${appearingTaskId === id ? s.isAppearing : ""}`}
       ref={id === firstIncompleteTaskId ? firstIncompleteTaskRef : null}
     >
       <input
