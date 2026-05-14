@@ -7,6 +7,7 @@ const headers = {
 const tasksApi = {
   getAll: () => fetch(URL).then((res) => res.json()),
 
+  getById: (id) => fetch(`${URL}/${id}`).then((res) => res.json()),
   add: (task) =>
     fetch(URL, {
       method: "POST",
